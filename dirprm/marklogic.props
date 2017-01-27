@@ -1,0 +1,29 @@
+
+gg.handlerlist=marklogic
+
+gg.handler.marklogic.type=oracle.goldengate.delivery.handler.marklogic.MarkLogicHandler
+gg.handler.marklogic.host=mac
+gg.handler.marklogic.port=8000
+gg.handler.marklogic.database=Documents
+gg.handler.marklogic.user=admin
+gg.handler.marklogic.password=admin
+gg.handler.marklogic.auth=digest
+gg.handler.marklogic.format=json
+
+gg.handler.marklogic.mode=tx
+
+goldengate.userexit.timestamp=utc
+goldengate.userexit.writers=javawriter
+javawriter.stats.display=TRUE
+javawriter.stats.full=TRUE
+
+gg.log=log4j
+gg.log.level=DEBUG
+
+gg.report.time=30sec
+
+##CHANGE THE PATH BELOW
+gg.classpath=/home/joe/ggs/marklogic/target/lib
+
+javawriter.bootoptions=-Xmx512m -Xms32m -Djava.class.path=ggjava/ggjava.jar:
+

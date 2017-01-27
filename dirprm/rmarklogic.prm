@@ -1,0 +1,8 @@
+REPLICAT rmarklogic
+-- Trail file for this example is located in "AdapterExamples/trail" directory
+-- Command to add REPLICAT
+-- add replicat rmarklogic, exttrail AdapterExamples/trail/tr
+TARGETDB LIBFILE libggjava.so SET property=dirprm/marklogic.props
+REPORTCOUNT EVERY 1 MINUTES, RATE
+GROUPTRANSOPS 10000
+MAP QASOURCE.*, TARGET QASOURCE.*;
