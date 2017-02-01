@@ -1,8 +1,7 @@
-import com.marklogic.client.DatabaseClientFactory;
+
 import oracle.goldengate.delivery.handler.marklogic.*;
 import oracle.goldengate.datasource.*;
-import oracle.goldengate.datasource.adapt.Col;
-import oracle.goldengate.datasource.adapt.Op;
+
 import oracle.goldengate.datasource.meta.ColumnMetaData;
 import oracle.goldengate.datasource.meta.DsMetaData;
 import oracle.goldengate.datasource.meta.TableMetaData;
@@ -56,7 +55,7 @@ public class MarkLogicHandlerTest {
     columnMetaData = new ColumnMetaData("c5", 4);
     columnMetaDatas.add(columnMetaData);
 
-    tableName = new TableName("ogg_test.t_person");
+    tableName = new TableName("ogg_test.new_table");
 
     TableMetaData tableMetaData = new TableMetaData(tableName, columnMetaDatas);
 
@@ -127,6 +126,14 @@ public class MarkLogicHandlerTest {
 
   @Ignore
   public void testTruncate() {
+
+    DataSourceConfig ds = new DataSourceConfig();
+    DsMetric dms = new DsMetric();
+    marklogicHandler.setHandlerMetric(dms);
+    marklogicHandler.init(ds, dsMetaData);
+
+
+
     DsColumn[] columns = new DsColumn[5];
     /*
     columns[0] = new DsColumnAfterValue("testNormal");
@@ -141,6 +148,7 @@ public class MarkLogicHandlerTest {
     GGDataSource.Status status = marklogicHandler.operationAdded(e, dsTransaction, dsOperation);
     marklogicHandler.transactionCommit(e, dsTransaction);
     Assert.assertEquals(GGDataSource.Status.OK, status);
+    marklogicHandler.destroy();
   }
 
   @Ignore

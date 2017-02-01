@@ -27,7 +27,6 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="ogg-marklogic-adapter" target="1.8" />
-      <module name="ogg-mongodb-adapter" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

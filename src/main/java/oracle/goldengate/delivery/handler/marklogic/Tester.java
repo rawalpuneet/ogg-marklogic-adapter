@@ -21,6 +21,7 @@ public class Tester {
   public static void main(String args[]) throws IOException {
       TestSub t = new TestSub();
       t.init();
+      System.out.println("testing");
   }
 
 }

@@ -2,7 +2,10 @@
 gg.handlerlist=marklogic
 
 gg.handler.marklogic.type=oracle.goldengate.delivery.handler.marklogic.MarkLogicHandler
-gg.handler.marklogic.host=mac
+
+#MarkLogic Host
+gg.handler.marklogic.host=localhost
+#Default port for connecting to MarkLogic
 gg.handler.marklogic.port=8000
 gg.handler.marklogic.database=Documents
 gg.handler.marklogic.user=admin
@@ -22,7 +25,7 @@ gg.log.level=DEBUG
 
 gg.report.time=30sec
 
-##CHANGE THE PATH BELOW
+##CHANGE THE PATH BELOW TO ADAPTER JAR directory
 gg.classpath=/home/joe/ggs/marklogic/target/lib
 
 javawriter.bootoptions=-Xmx512m -Xms32m -Djava.class.path=ggjava/ggjava.jar:
