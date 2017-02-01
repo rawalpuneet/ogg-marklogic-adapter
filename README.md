@@ -10,6 +10,7 @@ MarkLogic is often used as a datahub for the information available in different 
 
 ## Configuration
 Adapter is currently cerfified for following versions:
+
 S.no| Software | Version
 ----|----------|--------
 1.  |MarkLogic | 8.x
