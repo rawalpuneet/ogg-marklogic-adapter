@@ -19,14 +19,29 @@ S.no| Software | Version
 4.  |GoldenGate| 12.2.0.1
 5.  |Centos    | 7.2.1511
 
+
+
 ### Setup MySQL 
+Goldengate requires binary logging enabled in the source database. For MySQL its reletively straight forward. Details are in the link
+```https://dev.mysql.com/doc/refman/5.7/en/replication-options-binary-log.html```
+
+For MySQL to work with Goldengate I had to do 2 adjustments :
+1. Create symlink to mysql.sock file in /tmp/ dir. That's what GG extract process expects. You can't change my.cnf to point to /tmp/ dir. Here is command to do that:
+```
+#tmpmysql.sh
+ln -s /var/lib/mysql/mysql.sock /tmp/mysql.sock
+```
+
 
 ### Setup MarkLogic
-
+```https://docs.marklogic.com/guide/installation/procedures#id_28962```
 
 ### Setup GoldenGate
+This adapter does not include goldengate jar files due to licencing restrictions. After installing goldengate for MySQL please copy all gg*.jar files to /lib/ directory.
+Here is the generic guide of installing GoldenGate for MySQL
+```https://docs.oracle.com/goldengate/1212/gg-winux/GIMYS/toc.htm```
 
-#### GoldenGate Extract 
+#### GoldenGate Extract
 
 #### GoldenGate Replicat
 
