@@ -28,9 +28,27 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.8.3" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.8.3" level="project" />
     <orderEntry type="module-library">
-      <library name="Maven: oracle.goldengate:ggjava:12.2.0.1.0.001">
+      <library name="Maven: com.oracle.goldengate:ggdbutil:12.2.0.1.2.001">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/ggjava.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/ggdbutil-12.2.0.1.2.001.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: com.oracle.goldengate:gguserexitapi:12.2.0.1.2.001">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/gguserexitapi-12.2.0.1.2.001.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="Maven: com.oracle.goldengate:ggutil:12.2.0.1.2.001">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/ggutil-12.2.0.1.2.001.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

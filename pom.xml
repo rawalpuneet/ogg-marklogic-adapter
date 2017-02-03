@@ -11,6 +11,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <goldengate.version>12.2.0.1.2.001</goldengate.version>
     </properties>
 
     <dependencies>
@@ -20,12 +21,25 @@
             <version>3.0.6</version>
         </dependency>
         <dependency>
-            <groupId>oracle.goldengate</groupId>
-            <artifactId>ggjava</artifactId>
-            <version>12.2.0.1.0.001</version>
-            <optional>true</optional>
+            <groupId>com.oracle.goldengate</groupId>
+            <artifactId>ggdbutil</artifactId>
+            <version>${goldengate.version}</version>
+            <systemPath>${project.basedir}/lib/ggdbutil-${goldengate.version}.jar</systemPath>
             <scope>system</scope>
-            <systemPath>${basedir}/lib/ggjava.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle.goldengate</groupId>
+            <artifactId>gguserexitapi</artifactId>
+            <version>${goldengate.version}</version>
+            <systemPath>${project.basedir}/lib/gguserexitapi-${goldengate.version}.jar</systemPath>
+            <scope>system</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle.goldengate</groupId>
+            <artifactId>ggutil</artifactId>
+            <version>${goldengate.version}</version>
+            <systemPath>${project.basedir}/lib/ggutil-${goldengate.version}.jar</systemPath>
+            <scope>system</scope>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
