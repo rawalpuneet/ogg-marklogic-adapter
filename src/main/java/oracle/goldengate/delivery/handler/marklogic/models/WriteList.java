@@ -8,8 +8,8 @@ import com.marklogic.client.io.JacksonHandle;
 import com.marklogic.client.io.marker.JSONWriteHandle;
 import oracle.goldengate.delivery.handler.marklogic.HandlerProperties;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.Hashtable;
 
 /**
  * Created by prawal on 1/23/17.
@@ -27,15 +27,49 @@ public class WriteList {
       JSONDocumentManager docMgr = handlerProperties.getClient().newJSONDocumentManager();
       DocumentMetadataHandle metadataHandle = new DocumentMetadataHandle();
       DocumentMetadataHandle.DocumentCollections coll = metadataHandle.getCollections();
+
       coll.add(this.items.get(0).getCollection());
       for (WriteListItem item : items) {
+
+        Hashtable<String, Object> node = new Hashtable<String,Object>();
+        if(item.getOperation() == item.UPDATE) {
+            node = updateNode(item, docMgr);
+        } else {
+          node = item.getMap();
+        }
+
         ObjectMapper mapper = new ObjectMapper();
-        JsonNode jsonNode = mapper.convertValue(item.getMap(), JsonNode.class);
+        JsonNode jsonNode = mapper.convertValue(node, JsonNode.class);
         JacksonHandle handle = new JacksonHandle(jsonNode);
         docMgr.write(item.getUri(), metadataHandle, handle);
       }
     }
 
+  };
+
+  private Hashtable<String, Object> updateNode(WriteListItem item, JSONDocumentManager docMgr) {
+
+    JacksonHandle handle = new JacksonHandle();
+    docMgr.read(item.getUri(), handle);
+
+    ObjectMapper mapper = new ObjectMapper();
+    Hashtable<String, Object> original = mapper.convertValue(handle.get(), Hashtable.class);
+    Hashtable<String, Object> update = item.getMap();
+
+    String key = null;
+    Set<String> keys = original.keySet();
+    Set<String> updateKeys = update.keySet();
+    Iterator<String> itr = updateKeys.iterator();
+
+    while (itr.hasNext()) {
+
+      key = itr.next();
+      if(keys.contains(key)) {
+        original.put(key, update.get(key));
+      }
+    }
+
+    return original;
   };
 
   public void clear() {

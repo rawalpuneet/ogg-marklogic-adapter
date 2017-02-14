@@ -77,10 +77,12 @@ VAM Read Checkpoint  2017-01-26 21:10:49.000000
 Replicat is responsible sending transactions target MarkLogic server. Here are the steps to get it done:
 ##### Setup MarkLogic Adapter
 1. Download Goldengate for BigData from this url: http://www.oracle.com/technetwork/middleware/goldengate/downloads/index.html
-2. Copy ggdbutil*.jar, gguserexitapi*.jar and ggutil*.jar to [MARKLOGIC-ADAPTER-DIR]/lib directory
-3. Update pom.xml <goldengate.version>[GOLDENGATE VERSION]</goldengate.version>
-4. Run command ```mvn package -DskipTests=true``` to generate target jars
-5. Create replicat file RML.prm in [GOLDENGATEDIR]/dirprm/ dir
+2. Extract the package to [HOME]/ggs directory.
+3. Download MarkLogic adapter source from this repo and create a directory 'marklogic' under [HOME]/ggs
+4. Copy ggdbutil*.jar, gguserexitapi*.jar and ggutil*.jar to [MARKLOGIC-ADAPTER-DIR]/lib directory
+5. Update pom.xml <goldengate.version>[GOLDENGATE VERSION]</goldengate.version>
+6. Run command ```mvn package -DskipTests=true``` to generate target jars
+7. Create replicat file RML.prm in [GOLDENGATEDIR]/dirprm/ dir
 ```
 REPLICAT rml
 -- Trail file for this example is located in "AdapterExamples/trail" directory

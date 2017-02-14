@@ -40,6 +40,8 @@ public abstract class OperationHandler {
         Hashtable<String, Object> dataMap = new Hashtable<String, Object>();
         for (Col col : op) {
             ColumnMetaData columnMetaData = tableMetaData.getColumnMetaData(col.getIndex());
+
+           /*
             if (useBefore) {
                 if (col.getBefore() != null) {
                     dataMap.put(columnMetaData.getOriginalColumnName(), col.getBeforeValue());
@@ -49,6 +51,16 @@ public abstract class OperationHandler {
                     dataMap.put(columnMetaData.getOriginalColumnName(), col.getAfterValue());
                 }
             }
+            */
+
+            // Use after values if present
+            if (col.getAfter() != null) {
+                dataMap.put(columnMetaData.getOriginalColumnName(), col.getAfterValue());
+            } else if (col.getBefore() != null) {
+                dataMap.put(columnMetaData.getOriginalColumnName(), col.getBeforeValue());
+            }
+
+
         }
         return dataMap;
     }

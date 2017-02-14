@@ -33,8 +33,12 @@ public class WriteListItem {
         return this.uri;
     }
 
-    public Map<String,Object> getMap() {
+    public Hashtable<String,Object> getMap() {
         return this.map;
+    }
+
+    public String getOperation() {
+       return this.operation;
     }
 
     public String getCollection() {
