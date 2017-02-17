@@ -19,7 +19,7 @@ public class InsertOperationHandler extends OperationHandler {
                             prepareKey(tableMetaData,op, false),
                             getDataMap(tableMetaData, op, false),
                             WriteListItem.INSERT,
-                            tableMetaData.getTableName().getShortName().toLowerCase());
+                            tableMetaData.getTableName());
 
         processOperation(item);
         handlerProperties.totalInserts++;

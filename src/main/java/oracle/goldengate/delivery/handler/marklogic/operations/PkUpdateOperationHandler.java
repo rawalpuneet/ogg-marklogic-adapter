@@ -18,12 +18,11 @@ public class PkUpdateOperationHandler extends OperationHandler {
         //Get previous key
         String olduri = prepareKey(tableMetaData,op,true);
         handlerProperties.deleteList.add(olduri);
-
         WriteListItem item = new WriteListItem(
             prepareKey(tableMetaData,op, false),
             getDataMap(tableMetaData, op, false),
             WriteListItem.INSERT,
-            tableMetaData.getTableName().getShortName().toLowerCase());
+            tableMetaData.getTableName());
 
         processOperation(item);
 

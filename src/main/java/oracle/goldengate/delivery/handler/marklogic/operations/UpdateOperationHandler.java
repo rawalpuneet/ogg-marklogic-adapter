@@ -19,7 +19,7 @@ public class UpdateOperationHandler extends OperationHandler {
             prepareKey(tableMetaData,op, false),
             getDataMap(tableMetaData, op, false),
             WriteListItem.UPDATE,
-            tableMetaData.getTableName().getShortName().toLowerCase());
+            tableMetaData.getTableName());
         processOperation(item);
 
         handlerProperties.totalUpdates++;

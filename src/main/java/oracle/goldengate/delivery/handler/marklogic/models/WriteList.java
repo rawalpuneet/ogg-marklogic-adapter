@@ -28,7 +28,8 @@ public class WriteList {
       DocumentMetadataHandle metadataHandle = new DocumentMetadataHandle();
       DocumentMetadataHandle.DocumentCollections coll = metadataHandle.getCollections();
 
-      coll.add(this.items.get(0).getCollection());
+      coll.addAll(this.items.get(0).getCollection());
+
       for (WriteListItem item : items) {
 
         Hashtable<String, Object> node = new Hashtable<String,Object>();
