@@ -9,32 +9,32 @@ import java.util.*;
  */
 public class WriteListItem {
     private String uri;
-    private Hashtable<String, Object> map = new Hashtable<String, Object>();
+    private HashMap<String, Object> map = new HashMap<String, Object>();
     // allowed values UPDATE OR INSERT
     private String operation = null;
     private Collection<String> collection =  new ArrayList<String>();
     public static final String UPDATE = "update";
     public static final String INSERT = "insert";
 
-    public WriteListItem(String uri, Hashtable<String, Object> map, String operation) {
+    public WriteListItem(String uri, HashMap<String, Object> map, String operation) {
         this.uri = uri;
         this.map = map;
         this.operation = operation;
     }
 
-    public WriteListItem(String uri, Hashtable<String, Object> map, String operation, String collection) {
+    public WriteListItem(String uri, HashMap<String, Object> map, String operation, String collection) {
         this.uri = uri;
         this.map = map;
         this.operation = operation;
         this.collection.add(collection);
     }
 
-    public WriteListItem(String uri, Hashtable<String, Object> map, String operation, TableName table) {
+    public WriteListItem(String uri, HashMap<String, Object> map, String operation, TableName table) {
         this.uri = uri;
         this.map = map;
         this.operation = operation;
 
-        this.collection.add(table.getShortName().toLowerCase() + "/" + table.getSchemaName().toLowerCase());
+        this.collection.add(   table.getSchemaName().toLowerCase()  + "/" + table.getShortName().toLowerCase());
         this.collection.add(table.getSchemaName().toLowerCase());
 
     }
@@ -43,7 +43,7 @@ public class WriteListItem {
         return this.uri;
     }
 
-    public Hashtable<String,Object> getMap() {
+    public HashMap<String,Object> getMap() {
         return this.map;
     }
 

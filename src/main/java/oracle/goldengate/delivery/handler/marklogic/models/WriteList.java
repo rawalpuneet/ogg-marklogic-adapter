@@ -10,6 +10,7 @@ import oracle.goldengate.delivery.handler.marklogic.HandlerProperties;
 
 import java.util.*;
 import java.util.Hashtable;
+import java.util.function.BooleanSupplier;
 
 /**
  * Created by prawal on 1/23/17.
@@ -28,34 +29,48 @@ public class WriteList {
       DocumentMetadataHandle metadataHandle = new DocumentMetadataHandle();
       DocumentMetadataHandle.DocumentCollections coll = metadataHandle.getCollections();
 
-      coll.addAll(this.items.get(0).getCollection());
-
       for (WriteListItem item : items) {
 
-        Hashtable<String, Object> node = new Hashtable<String,Object>();
-        if(item.getOperation() == item.UPDATE) {
+        boolean docExists = false;
+
+        if(item.getOperation() == item.UPDATE && docMgr.exists(item.getUri()) != null) {
+          docExists = true;
+        }
+
+        HashMap<String, Object> node = new HashMap<String,Object>();
+
+        if(docExists == true) {
             node = updateNode(item, docMgr);
+        } else if(item.getOperation() == item.UPDATE) {
+          // skipping if update and doc doesn't exist
         } else {
           node = item.getMap();
         }
 
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode jsonNode = mapper.convertValue(node, JsonNode.class);
-        JacksonHandle handle = new JacksonHandle(jsonNode);
-        docMgr.write(item.getUri(), metadataHandle, handle);
+        if(docExists == false && item.getOperation() == item.UPDATE) {
+            // skipping if update and doc doesn't exist
+        } else {
+          coll.addAll(item.getCollection());
+          ObjectMapper mapper = new ObjectMapper();
+          JsonNode jsonNode = mapper.convertValue(node, JsonNode.class);
+          JacksonHandle handle = new JacksonHandle(jsonNode);
+          docMgr.write(item.getUri(), metadataHandle, handle);
+          coll.clear();
+        }
+
       }
     }
 
   };
 
-  private Hashtable<String, Object> updateNode(WriteListItem item, JSONDocumentManager docMgr) {
+  private HashMap<String, Object> updateNode(WriteListItem item, JSONDocumentManager docMgr) {
 
     JacksonHandle handle = new JacksonHandle();
     docMgr.read(item.getUri(), handle);
 
     ObjectMapper mapper = new ObjectMapper();
-    Hashtable<String, Object> original = mapper.convertValue(handle.get(), Hashtable.class);
-    Hashtable<String, Object> update = item.getMap();
+    HashMap<String, Object> original = mapper.convertValue(handle.get(), HashMap.class);
+    HashMap<String, Object> update = item.getMap();
 
     String key = null;
     Set<String> keys = original.keySet();

@@ -106,7 +106,7 @@ public class MarkLogicHandlerTest {
     DsColumn[] columns = new DsColumn[5];
     columns[0] = new DsColumnComposite(new DsColumnAfterValue("puneet"), new DsColumnBeforeValue("testing"));
     columns[1] = new DsColumnAfterValue("2");
-    columns[2] = new DsColumnComposite(new DsColumnAfterValue("200"), new DsColumnBeforeValue("3"));
+    columns[2] = new DsColumnComposite(new DsColumnAfterValue("600"), new DsColumnBeforeValue("3"));
     columns[3] = new DsColumnComposite(new DsColumnAfterValue("new date"), new DsColumnBeforeValue("some date"));
     columns[4] = new DsColumnComposite(new DsColumnAfterValue("600"), new DsColumnBeforeValue("6"));
 

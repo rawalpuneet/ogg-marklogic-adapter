@@ -9,6 +9,8 @@ import oracle.goldengate.datasource.meta.TableMetaData;
 import oracle.goldengate.delivery.handler.marklogic.HandlerProperties;
 import oracle.goldengate.delivery.handler.marklogic.models.WriteListItem;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public abstract class OperationHandler {
@@ -35,9 +37,11 @@ public abstract class OperationHandler {
         handlerProperties.writeList.add(item);
     }
 
-    protected Hashtable<String, Object> getDataMap(TableMetaData tableMetaData, Op op, boolean useBefore) {
+    protected HashMap<String, Object> getDataMap(TableMetaData tableMetaData, Op op, boolean useBefore) {
 
-        Hashtable<String, Object> dataMap = new Hashtable<String, Object>();
+        HashMap<String, Object> dataMap = new HashMap<String, Object>();
+        dataMap.put("headers", headers());
+
         for (Col col : op) {
             ColumnMetaData columnMetaData = tableMetaData.getColumnMetaData(col.getIndex());
 
@@ -89,9 +93,18 @@ public abstract class OperationHandler {
                 }
             }
         }
-        String index = stringBuilder.toString();
+        String index = stringBuilder.toString().replaceAll("\\s+","");
         return "/" + tableMetaData.getTableName().getShortName().toLowerCase() + "/"+ index + ".json";
     }
+
+    private HashMap headers() {
+        HashMap<String, Object> headers = new HashMap<String, Object>();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+        Date date = new Date();
+        String fdate = df.format(date);
+        headers.put("importDate",fdate);
+        return headers;
+    };
 
 
 
