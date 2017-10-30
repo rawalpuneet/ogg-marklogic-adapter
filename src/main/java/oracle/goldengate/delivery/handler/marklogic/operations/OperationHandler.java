@@ -8,10 +8,20 @@ import oracle.goldengate.datasource.meta.TableMetaData;
 
 import oracle.goldengate.delivery.handler.marklogic.HandlerProperties;
 import oracle.goldengate.delivery.handler.marklogic.models.WriteListItem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.security.*;
+import java.util.UUID;
+
+
+import static java.security.MessageDigest.*;
+
 
 public abstract class OperationHandler {
 
@@ -23,6 +33,7 @@ public abstract class OperationHandler {
 
     public abstract void process(TableMetaData tableMetaData, Op op) throws Exception;
 
+    final private static Logger logger = LoggerFactory.getLogger(OperationHandler.class);
     /**
      * @param tableMetaData
      *            - Table meta data
@@ -69,13 +80,15 @@ public abstract class OperationHandler {
         return dataMap;
     }
 
-    protected String prepareKey(TableMetaData tableMetaData, Op op, boolean useBefore) {
+    protected String prepareKey(TableMetaData tableMetaData, Op op, boolean useBefore) throws NoSuchAlgorithmException {
 
         StringBuilder stringBuilder = new StringBuilder();
+
         String delimiter = "";
 
 
-        for (ColumnMetaData columnMetaData : tableMetaData.getKeyColumns()) {
+        for (ColumnMetaData columnMetaData : tableMetaData.getKeyColumns()  ) {
+
             DsColumn column = op.getColumn(columnMetaData.getIndex());
 
             if (useBefore) {
@@ -93,8 +106,24 @@ public abstract class OperationHandler {
                 }
             }
         }
-        String index = stringBuilder.toString().replaceAll("\\s+","");
-        return "/" + tableMetaData.getTableName().getShortName().toLowerCase() + "/"+ index + ".json";
+
+        return "/" + tableMetaData.getTableName().getShortName().toLowerCase() + "/"+ prepareKeyIndex(stringBuilder) + ".json";
+    }
+
+    // Joining key column values and hashing
+    private String prepareKeyIndex(StringBuilder sb) throws NoSuchAlgorithmException {
+
+        MessageDigest md5 = MessageDigest.getInstance("MD5");
+        String index;
+        if(sb.length() > 0) {
+            index = sb.toString();
+            md5.update(StandardCharsets.UTF_8.encode(index));
+            index =  String.format("%032x", new BigInteger(1, md5.digest()));
+        } else {
+            index = UUID.randomUUID().toString();
+        }
+
+        return index;
     }
 
     private HashMap headers() {
