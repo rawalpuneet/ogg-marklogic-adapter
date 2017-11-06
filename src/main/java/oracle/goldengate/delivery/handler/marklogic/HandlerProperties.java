@@ -7,6 +7,8 @@ import oracle.goldengate.delivery.handler.marklogic.models.TruncateList;
 import oracle.goldengate.delivery.handler.marklogic.models.WriteList;
 import com.marklogic.client.DatabaseClientFactory.Authentication;
 
+import java.util.HashMap;
+
 public class HandlerProperties {
 
     private DatabaseClient client;
@@ -17,6 +19,9 @@ public class HandlerProperties {
     private String password = "admin";
     private String format = "json";
     private String auth = "digest";
+    private String rootName = null;
+    private String transformName = null;
+    private HashMap<String, String> transformParams = null;
 
 
     public Long totalInserts = 0L;
@@ -82,5 +87,40 @@ public class HandlerProperties {
 
     public String getAuth() {
         return auth;
+    }
+
+    public void setRootName(String rootName) {
+        this.rootName = rootName;
+    }
+
+    public String getRootName() {
+        return rootName;
+    }
+
+    public void setTransformName(String transformName) {
+        this.transformName = transformName;
+    }
+
+    public String getTransformName() {
+        return transformName;
+    }
+
+    public void setTransformParams(String transformParams) {
+        if (transformParams == null) {
+            this.transformParams = null;
+        } else {
+            // entity=Article,flow=GkgCsv,flowType=input
+            this.transformParams = new HashMap<String, String>();
+
+            String[] params = transformParams.split(",");
+            for (String param : params) {
+              String[] parts = param.split("=");
+              this.transformParams.put(parts[0], parts[1]);
+            }
+        }
+    }
+
+    public HashMap<String, String> getTransformParams() {
+        return transformParams;
     }
 }

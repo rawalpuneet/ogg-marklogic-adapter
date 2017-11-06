@@ -2,10 +2,19 @@ package oracle.goldengate.delivery.handler.marklogic.models;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.marklogic.client.document.JSONDocumentManager;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.marklogic.client.document.ServerTransform;
+
+import com.marklogic.client.document.DocumentManager;
 import com.marklogic.client.io.DocumentMetadataHandle;
 import com.marklogic.client.io.JacksonHandle;
+import com.marklogic.client.io.StringHandle;
 import com.marklogic.client.io.marker.JSONWriteHandle;
+import com.marklogic.client.io.Format;
+
+
 import oracle.goldengate.delivery.handler.marklogic.HandlerProperties;
 
 import java.util.*;
@@ -22,10 +31,28 @@ public class WriteList {
     this.items.add(item);
   }
 
-  public void commit(HandlerProperties handlerProperties) {
+  private DocumentManager getDocumentManager(HandlerProperties handlerProperties) {
+    // defaults to json
+    if ("xml".equals(handlerProperties.getFormat())) {
+      return handlerProperties.getClient().newXMLDocumentManager();
+    } else {
+      return handlerProperties.getClient().newJSONDocumentManager();
+    }
+  }
+
+  private ObjectMapper getObjectMapper(HandlerProperties handlerProperties) {
+    // defaults to json
+    if ("xml".equals(handlerProperties.getFormat())) {
+      return new XmlMapper();
+    } else {
+      return new ObjectMapper();
+    }
+  }
+
+  public void commit(HandlerProperties handlerProperties) throws JsonProcessingException {
 
     if(this.items.size() > 0) {
-      JSONDocumentManager docMgr = handlerProperties.getClient().newJSONDocumentManager();
+      DocumentManager docMgr = getDocumentManager(handlerProperties);
       DocumentMetadataHandle metadataHandle = new DocumentMetadataHandle();
       DocumentMetadataHandle.DocumentCollections coll = metadataHandle.getCollections();
 
@@ -40,35 +67,66 @@ public class WriteList {
         HashMap<String, Object> node = new HashMap<String,Object>();
 
         if(docExists == true) {
-            node = updateNode(item, docMgr);
+            node = updateNode(item, docMgr, handlerProperties);
         } else if(item.getOperation() == item.UPDATE) {
           // skipping if update and doc doesn't exist
         } else {
           node = item.getMap();
         }
 
+        HashMap<String, Object> node = item.getMap();
+
         if(docExists == false && item.getOperation() == item.UPDATE) {
-            // skipping if update and doc doesn't exist
+          // skipping if update and doc doesn't exist
         } else {
           coll.addAll(item.getCollection());
-          ObjectMapper mapper = new ObjectMapper();
-          JsonNode jsonNode = mapper.convertValue(node, JsonNode.class);
-          JacksonHandle handle = new JacksonHandle(jsonNode);
+
+          ObjectMapper mapper = getObjectMapper(handlerProperties);
+
+          ObjectWriter writer = mapper.writer();
+          if (handlerProperties.getRootName() != null) {
+            writer = writer.withRootName(handlerProperties.getRootName());
+          }
+
+          StringHandle handle = new StringHandle(writer.writeValueAsString(node));
+
+          if (handlerProperties.getTransformName() != null) {
+            docMgr.setWriteTransform(getTransform(handlerProperties));
+          }
+
           docMgr.write(item.getUri(), metadataHandle, handle);
+
           coll.clear();
         }
 
       }
     }
-
   };
 
-  private HashMap<String, Object> updateNode(WriteListItem item, JSONDocumentManager docMgr) {
+  private ServerTransform getTransform(HandlerProperties handlerProperties) {
+    ServerTransform transform = new ServerTransform(handlerProperties.getTransformName());
+
+    HashMap<String, String> params = handlerProperties.getTransformParams();
+    for (String param : params.keySet()) {
+      transform.addParameter(param, params.get(param));
+    }
+
+    return transform;
+  }
+
+  private HashMap<String, Object> updateNode(WriteListItem item, DocumentManager docMgr, HandlerProperties handlerProperties) {
+
+    // need to figure out what to do with XML
+
+    // also need to figure out what to do with data that is in an envelope: if a transform was called,
+    // how can we update that data?
+
+    // if the update is supposed to have all fields, why do we need to merge? can't we just replace?
 
     JacksonHandle handle = new JacksonHandle();
     docMgr.read(item.getUri(), handle);
 
-    ObjectMapper mapper = new ObjectMapper();
+    ObjectMapper mapper = getObjectMapper(handlerProperties);
     HashMap<String, Object> original = mapper.convertValue(handle.get(), HashMap.class);
     HashMap<String, Object> update = item.getMap();
 

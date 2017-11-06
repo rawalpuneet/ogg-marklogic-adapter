@@ -107,7 +107,7 @@ public abstract class OperationHandler {
             }
         }
 
-        return "/" + tableMetaData.getTableName().getShortName().toLowerCase() + "/"+ prepareKeyIndex(stringBuilder) + ".json";
+        return "/" + tableMetaData.getTableName().getShortName().toLowerCase() + "/"+ prepareKeyIndex(stringBuilder) + "." + handlerProperties.getFormat();
     }
 
     // Joining key column values and hashing

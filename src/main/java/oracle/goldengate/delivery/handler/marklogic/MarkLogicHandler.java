@@ -21,7 +21,7 @@ public class MarkLogicHandler extends AbstractHandler {
 
     private DBOperationFactory dbOperationFactory;
 
-        public MarkLogicHandler() {
+    public MarkLogicHandler() {
         super();
         handlerProperties = new HandlerProperties();
         dbOperationFactory = new DBOperationFactory();
@@ -148,7 +148,7 @@ public class MarkLogicHandler extends AbstractHandler {
         handlerProperties.setDatabase(database);
     }
     public void setFormat(String format) {
-        handlerProperties.setFormat(format);
+        handlerProperties.setFormat(format.toLowerCase());
     }
     public void setHost(String host) {
         handlerProperties.setHost(host);
@@ -158,4 +158,7 @@ public class MarkLogicHandler extends AbstractHandler {
         handlerProperties.setAuth(auth);
     }
 
+    public HandlerProperties getProperties() {
+      return this.handlerProperties;
+    }
 }
