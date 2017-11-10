@@ -80,7 +80,7 @@ public class WriteList {
               writer = writer.withRootName(handlerProperties.getRootName());
             }
 
-            HashMap<String, Object> node = new HashMap<String,Object>();
+            HashMap<String, Object> node = item.getMap();
             StringHandle handle = new StringHandle(writer.writeValueAsString(node));
             docMgr.write(item.getUri(), metadataHandle, handle);
           } else {
