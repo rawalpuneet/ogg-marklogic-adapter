@@ -93,6 +93,8 @@ REPORTCOUNT EVERY 1 MINUTES, RATE
 GROUPTRANSOPS 10000
 MAP SOURCEDATABASE.*, TARGET SOURCEDATABASE.*;
 ```
+- Update SOURCEDATABASE to database name in source system.
+
 6. Copy Marklogic adapter dirctory to [GOLDENGATEDIR]/marklogic
 7. Update [GOLDENGATEDIR]/marklogic/dirprm/marklogic.props with marklogic connection information. 
 ```
