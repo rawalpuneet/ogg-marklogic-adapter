@@ -25,6 +25,10 @@ import java.util.function.BooleanSupplier;
  * Created by prawal on 1/23/17.
  */
 public class WriteList {
+
+  private static String UPDATE_OPTION = "{operation:\"update\"}";
+  private static String INSERT_OPTION = "{operation:\"insert\"}";
+
   private List<WriteListItem> items = new ArrayList<WriteListItem>();
 
   public void add(WriteListItem item) {
@@ -62,9 +66,9 @@ public class WriteList {
           if (handlerProperties.getTransformName() != null) {
             ServerTransform transform = getTransform(handlerProperties);
             if (item.getOperation() == WriteListItem.UPDATE) {
-              transform.addParameter("operation", "update");
+              transform.addParameter("options", UPDATE_OPTION);
             } else {
-              transform.addParameter("operation", "insert");
+              transform.addParameter("options", INSERT_OPTION);
             }
 
             docMgr.setWriteTransform(transform);

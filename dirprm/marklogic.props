@@ -16,14 +16,11 @@ gg.handler.marklogic.root=root
 
 # Use these to configure a transform to run
 # gg.handler.marklogic.transform=<transform name>
-# gg.handler.marklogic.transform.<parameter name>=<parameter value>
+# gg.handler.marklogic.transformParams=<param1=paramvalue1,param2=paramvalue2,...>
 
 # The following are an example of running a data hub framework input flow
 # gg.handler.marklogic.transform=run-flow
-# gg.handler.marklogic.transform.entity=<entity name>
-# gg.handler.marklogic.transform.flow=<flow name>
-# gg.handler.marklogic.transform.flowType=input
-
+# gg.handler.marklogic.transformParams=entity-name=MyEntity,flow-name=myflowname,jobId=myjobid
 
 gg.handler.marklogic.mode=tx
 
