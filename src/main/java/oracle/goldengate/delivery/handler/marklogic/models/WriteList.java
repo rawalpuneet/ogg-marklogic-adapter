@@ -82,7 +82,10 @@ public class WriteList {
 
             HashMap<String, Object> node = item.getMap();
             StringHandle handle = new StringHandle(writer.writeValueAsString(node));
+
+            coll.addAll(item.getCollection());
             docMgr.write(item.getUri(), metadataHandle, handle);
+            coll.clear();
           } else {
             boolean docExists = false;
 
@@ -103,7 +106,7 @@ public class WriteList {
             if(docExists == false && item.getOperation() == WriteListItem.UPDATE) {
               // skipping if update and doc doesn't exist
             } else {
-              coll.addAll(item.getCollection());
+
 
               ObjectMapper mapper = getObjectMapper(handlerProperties);
 
@@ -114,8 +117,8 @@ public class WriteList {
 
               StringHandle handle = new StringHandle(writer.writeValueAsString(node));
 
+              coll.addAll(item.getCollection());
               docMgr.write(item.getUri(), metadataHandle, handle);
-
               coll.clear();
             }
           }

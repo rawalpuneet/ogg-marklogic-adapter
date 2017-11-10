@@ -20,7 +20,7 @@ gg.handler.marklogic.rootName=root
 
 # The following are an example of running a data hub framework input flow
 # gg.handler.marklogic.transformName=run-flow
-# gg.handler.marklogic.transformParams=entity-name=MyEntity,flow-name=myflowname,jobId=myjobid
+# gg.handler.marklogic.transformParams=entity-name=MyEntity,flow-name=myflowname,job-id=myjobid
 
 gg.handler.marklogic.mode=tx
 
