@@ -12,7 +12,7 @@ gg.handler.marklogic.user=admin
 gg.handler.marklogic.password=admin
 gg.handler.marklogic.auth=digest
 gg.handler.marklogic.format=json
-gg.handler.marklogic.root=root
+gg.handler.marklogic.rootName=root
 
 # Use these to configure a transform to run
 # gg.handler.marklogic.transform=<transform name>

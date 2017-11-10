@@ -158,6 +158,10 @@ public class MarkLogicHandler extends AbstractHandler {
         handlerProperties.setAuth(auth);
     }
 
+    public void setRootName(String rootName) {
+        handlerProperties.setRootName(rootName);
+    }
+    
     public void setTransformName(String transformName) {
         handlerProperties.setTransformName(transformName);
     }
