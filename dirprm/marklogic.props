@@ -38,7 +38,7 @@ gg.log.level=DEBUG
 gg.report.time=30sec
 
 ##CHANGE THE PATH BELOW TO ADAPTER JAR directory
-gg.classpath=/home/joe/ggs/marklogic/target/lib
+gg.classpath=/home/joe/ggs/marklogic/target/lib/*
 
 javawriter.bootoptions=-Xmx512m -Xms32m -Djava.class.path=ggjava/ggjava.jar:
 

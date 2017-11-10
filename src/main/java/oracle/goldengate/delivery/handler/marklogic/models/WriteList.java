@@ -58,47 +58,63 @@ public class WriteList {
 
       for (WriteListItem item : items) {
 
-        boolean docExists = false;
-
-        if(item.getOperation() == item.UPDATE && docMgr.exists(item.getUri()) != null) {
-          docExists = true;
-        }
-
-        HashMap<String, Object> node = new HashMap<String,Object>();
-
-        if(docExists == true) {
-            node = updateNode(item, docMgr, handlerProperties);
-        } else if(item.getOperation() == item.UPDATE) {
-          // skipping if update and doc doesn't exist
-        } else {
-          node = item.getMap();
-        }
-
-        HashMap<String, Object> node = item.getMap();
-
-        if(docExists == false && item.getOperation() == item.UPDATE) {
-          // skipping if update and doc doesn't exist
-        } else {
-          coll.addAll(item.getCollection());
-
-          ObjectMapper mapper = getObjectMapper(handlerProperties);
-
-          ObjectWriter writer = mapper.writer();
-          if (handlerProperties.getRootName() != null) {
-            writer = writer.withRootName(handlerProperties.getRootName());
-          }
-
-          StringHandle handle = new StringHandle(writer.writeValueAsString(node));
-
+          // assume updates vs inserts are handled in the transform
           if (handlerProperties.getTransformName() != null) {
-            docMgr.setWriteTransform(getTransform(handlerProperties));
+            ServerTransform transform = getTransform(handlerProperties);
+            if (item.getOperation() == WriteListItem.UPDATE) {
+              transform.addParameter("operation", "update");
+            } else {
+              transform.addParameter("operation", "insert");
+            }
+
+            docMgr.setWriteTransform(transform);
+
+            ObjectMapper mapper = getObjectMapper(handlerProperties);
+
+            ObjectWriter writer = mapper.writer();
+            if (handlerProperties.getRootName() != null) {
+              writer = writer.withRootName(handlerProperties.getRootName());
+            }
+
+            HashMap<String, Object> node = new HashMap<String,Object>();
+            StringHandle handle = new StringHandle(writer.writeValueAsString(node));
+            docMgr.write(item.getUri(), metadataHandle, handle);
+          } else {
+            boolean docExists = false;
+
+            if(item.getOperation() == WriteListItem.UPDATE && docMgr.exists(item.getUri()) != null) {
+              docExists = true;
+            }
+
+            HashMap<String, Object> node = new HashMap<String,Object>();
+
+            if(docExists == true) {
+                node = updateNode(item, docMgr, handlerProperties);
+            } else if(item.getOperation() == WriteListItem.UPDATE) {
+              // skipping if update and doc doesn't exist
+            } else {
+              node = item.getMap();
+            }
+
+            if(docExists == false && item.getOperation() == WriteListItem.UPDATE) {
+              // skipping if update and doc doesn't exist
+            } else {
+              coll.addAll(item.getCollection());
+
+              ObjectMapper mapper = getObjectMapper(handlerProperties);
+
+              ObjectWriter writer = mapper.writer();
+              if (handlerProperties.getRootName() != null) {
+                writer = writer.withRootName(handlerProperties.getRootName());
+              }
+
+              StringHandle handle = new StringHandle(writer.writeValueAsString(node));
+
+              docMgr.write(item.getUri(), metadataHandle, handle);
+
+              coll.clear();
+            }
           }
-
-          docMgr.write(item.getUri(), metadataHandle, handle);
-
-          coll.clear();
-        }
-
       }
     }
   };
