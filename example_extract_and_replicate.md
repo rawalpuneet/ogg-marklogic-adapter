@@ -1,4 +1,7 @@
-# Assumptions and adapter behavior
+# Configuring to use Data Hub Input Flows
+When configured to use the data hub framework input flows and transforms, the following assumptions are made. The other sections detail how to setup golden gate initial export and load as well as continuous replication for change data capture.
+
+## Assumptions and adapter behavior
 1) No PK updates
 2) Inserts, updates and deletes only
 3) No checks for duplicate-record - an insert will just overwrite the existing
