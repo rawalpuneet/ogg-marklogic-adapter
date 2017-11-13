@@ -1,0 +1,35 @@
+gg.handlerlist=marklogic
+
+gg.handler.marklogic.type=oracle.goldengate.delivery.handler.marklogic.MarkLogicHandler
+
+#MarkLogic Host
+gg.handler.marklogic.host=localhost
+
+gg.handler.marklogic.port=8023
+gg.handler.marklogic.database=ml-ipas-STAGING
+gg.handler.marklogic.user=admin
+gg.handler.marklogic.password=admin
+gg.handler.marklogic.auth=digest
+gg.handler.marklogic.format=xml
+gg.handler.marklogic.rootName=root
+
+# The following are an example of running a data hub framework input flow
+gg.handler.marklogic.transformName=run-flow
+gg.handler.marklogic.transformParams=entity-name=Policy,flow-name=policy,job-id=OGGreplication
+
+gg.handler.marklogic.mode=tx
+
+goldengate.userexit.timestamp=utc
+goldengate.userexit.writers=javawriter
+javawriter.stats.display=TRUE
+javawriter.stats.full=TRUE
+
+gg.log=log4j
+gg.log.level=DEBUG
+
+gg.report.time=30sec
+
+##CHANGE THE PATH BELOW TO ADAPTER JAR directory
+gg.classpath=/space/ggs/marklogic/target/lib/*
+
+javawriter.bootoptions=-Xmx512m -Xms32m -Djava.class.path=ggjava/ggjava.jar:
