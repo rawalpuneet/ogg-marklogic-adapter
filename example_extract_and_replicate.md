@@ -9,7 +9,7 @@ When configured to use the data hub framework input flows and transforms, the fo
 
 # Setup and start extract for the “ipas” database changes
 ## On Source system:
-Create <GG install dir>/dirprm/IPAS.prm
+Create \<GG install dir\>/dirprm/IPAS.prm
 ```
 EXTRACT IPAS
 DBOPTIONS HOST localhost, CONNECTIONPORT 3306
@@ -32,11 +32,11 @@ via ggsci
 
 Extract the `ogg-marklogic-adapter` archive to <GG install dir>.
 
-Edit <GG install dir>/ogg-marklogic-adapter/dirprm/ipas.props
+Edit \<GG install dir\>/ogg-marklogic-adapter/dirprm/ipas.props
 1) Set `gg.handler.marklogic.host` to the MarkLogic host
 1) Set `gg.classpath` to `<GG install dir>/ogg-marklogic-adapter/target/lib/*`
 
-Create <GG install dir>/dirprm/IPAS.prm
+Create \<GG install dir\>/dirprm/IPAS.prm
 ```
 REPLICAT IPAS
 HANDLECOLLISIONS
@@ -53,7 +53,7 @@ via ggsci
 # Setup and run initial extract
 ## On Source system:
 
-Create <GG install dir>/dirprm/IPASINIT.prm
+Create \<GG install dir\>/dirprm/IPASINIT.prm
 ```
 SOURCEISTABLE
 DBOPTIONS HOST localhost, CONNECTIONPORT 3306
@@ -76,7 +76,7 @@ This should create a remote trail file on the target system with all of the data
 # Setup and run initial load
 ## On the target system:
 
-create <GG install dir>/dirprm/IPASLOAD.prm
+Create \<GG install dir\>/dirprm/IPASLOAD.prm
 ```
 SPECIALRUN
 ASSUMETARGETDEFS
@@ -106,7 +106,7 @@ via ggsci
 Remove the HANDLECOLLISIONS parameter
 ## On the target system:
 
-edit <GG install dir>/dirprm/IPASLOAD.prm and remove this line
+Edit \<GG install dir\>/dirprm/IPASLOAD.prm and remove this line
 ```
 HANDLECOLLISIONS
 ```
