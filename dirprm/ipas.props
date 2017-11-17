@@ -1,3 +1,4 @@
+
 gg.handlerlist=marklogic
 
 gg.handler.marklogic.type=oracle.goldengate.delivery.handler.marklogic.MarkLogicHandler
