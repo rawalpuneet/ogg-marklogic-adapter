@@ -32,6 +32,7 @@ public class MarkLogicHandlerTest {
   private DsTransaction dsTransaction;
   private TableName tableName;
   private DsMetaData dsMetaData;
+  private TableMetaData tableMetaData;
 
   @BeforeClass
   public void init() {
@@ -56,7 +57,7 @@ public class MarkLogicHandlerTest {
 
     tableName = new TableName("ogg_test.new_table");
 
-    TableMetaData tableMetaData = new TableMetaData(tableName, columnMetaDatas);
+    tableMetaData = new TableMetaData(tableName, columnMetaDatas);
 
     dsMetaData = new DsMetaData();
     dsMetaData.setTableMetaData(tableMetaData);
@@ -67,7 +68,7 @@ public class MarkLogicHandlerTest {
     GGTranID ggTranID = GGTranID.getID(i, j);
 
     dsTransaction = new DsTransaction(ggTranID);
-    e = new DsEventManager.TxEvent(dsTransaction, dsMetaData, "Sample Transaction");
+    e = new DsEventManager.TxEvent(dsTransaction, ggTranID, dsMetaData, "Sample Transaction");
 
   }
 
@@ -88,7 +89,7 @@ public class MarkLogicHandlerTest {
 
       DsRecord dsRecord = new DsRecord(columns);
 
-      DsOperation dsOperation = new DsOperation(tableName, DsOperation.OpType.DO_INSERT, "2016-05-13 19:15:15.010",0l, 0l, dsRecord);
+      DsOperation dsOperation = new DsOperation(tableName, tableMetaData, DsOperation.OpType.DO_INSERT, "2016-05-13 19:15:15.010",0l, 0l, dsRecord);
       GGDataSource.Status status = marklogicHandler.operationAdded(e, dsTransaction, dsOperation);
       marklogicHandler.transactionCommit(e, dsTransaction);
       Assert.assertEquals(GGDataSource.Status.OK, status);
@@ -115,7 +116,7 @@ public class MarkLogicHandlerTest {
 
     DsRecord dsRecord = new DsRecord(columns);
 
-    DsOperation dsOperation = new DsOperation(tableName, DsOperation.OpType.DO_UPDATE, "2016-05-13 19:15:15.010",0l, 0l, dsRecord);
+    DsOperation dsOperation = new DsOperation(tableName, tableMetaData, DsOperation.OpType.DO_UPDATE, "2016-05-13 19:15:15.010",0l, 0l, dsRecord);
     GGDataSource.Status status = marklogicHandler.operationAdded(e, dsTransaction, dsOperation);
     marklogicHandler.transactionCommit(e, dsTransaction);
     Assert.assertEquals(GGDataSource.Status.OK, status);
@@ -143,7 +144,7 @@ public class MarkLogicHandlerTest {
     */
 
     DsRecord dsRecord = new DsRecord(columns);
-    DsOperation dsOperation = new DsOperation(tableName, DsOperation.OpType.DO_TRUNCATE, "2016-05-13 19:15:15.010",0l, 0l, dsRecord);
+    DsOperation dsOperation = new DsOperation(tableName, tableMetaData, DsOperation.OpType.DO_TRUNCATE, "2016-05-13 19:15:15.010",0l, 0l, dsRecord);
     GGDataSource.Status status = marklogicHandler.operationAdded(e, dsTransaction, dsOperation);
     marklogicHandler.transactionCommit(e, dsTransaction);
     Assert.assertEquals(GGDataSource.Status.OK, status);
