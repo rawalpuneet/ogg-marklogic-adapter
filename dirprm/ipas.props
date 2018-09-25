@@ -5,22 +5,18 @@ gg.handler.marklogic.type=oracle.goldengate.delivery.handler.marklogic.MarkLogic
 
 #MarkLogic Host
 gg.handler.marklogic.host=localhost
-#Default port for connecting to MarkLogic
-gg.handler.marklogic.port=8000
-gg.handler.marklogic.database=Documents
+
+gg.handler.marklogic.port=8023
+gg.handler.marklogic.database=ml-ipas-STAGING
 gg.handler.marklogic.user=admin
 gg.handler.marklogic.password=admin
 gg.handler.marklogic.auth=digest
-gg.handler.marklogic.format=json
+gg.handler.marklogic.format=xml
 gg.handler.marklogic.rootName=root
 
-# Use these to configure a transform to run
-# gg.handler.marklogic.transformName=<transform name>
-# gg.handler.marklogic.transformParams=<param1=paramvalue1,param2=paramvalue2,...>
-
 # The following are an example of running a data hub framework input flow
-# gg.handler.marklogic.transformName=run-flow
-# gg.handler.marklogic.transformParams=entity-name=MyEntity,flow-name=myflowname,job-id=myjobid
+gg.handler.marklogic.transformName=run-flow
+gg.handler.marklogic.transformParams=entity-name=Policy,flow-name=policy,job-id=OGGreplication
 
 gg.handler.marklogic.mode=tx
 
@@ -35,7 +31,6 @@ gg.log.level=DEBUG
 gg.report.time=30sec
 
 ##CHANGE THE PATH BELOW TO ADAPTER JAR directory
-gg.classpath=/home/joe/ggs/marklogic/target/lib/*
+gg.classpath=<GG install dir>/ogg-marklogic-adapter/target/lib/*
 
 javawriter.bootoptions=-Xmx512m -Xms32m -Djava.class.path=ggjava/ggjava.jar:
-

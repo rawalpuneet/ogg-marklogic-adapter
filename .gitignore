@@ -1,2 +1,4 @@
 target/
 /lib/*:w
+*~
+.DS_Store

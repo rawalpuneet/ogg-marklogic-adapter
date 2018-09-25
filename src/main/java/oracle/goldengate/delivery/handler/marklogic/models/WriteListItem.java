@@ -8,7 +8,10 @@ import java.util.*;
  * Created by prawal on 1/23/17.
  */
 public class WriteListItem {
+
     private String uri;
+    private String oldUri;
+
     private HashMap<String, Object> map = new HashMap<String, Object>();
     // allowed values UPDATE OR INSERT
     private String operation = null;
@@ -41,6 +44,14 @@ public class WriteListItem {
 
     public String getUri() {
         return this.uri;
+    }
+
+    public String getOldUri() {
+        return this.oldUri;
+    }
+
+    public void setOldUri(String oldUri) {
+        this.oldUri = oldUri;
     }
 
     public HashMap<String,Object> getMap() {
