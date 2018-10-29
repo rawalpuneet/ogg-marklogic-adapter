@@ -11,6 +11,7 @@ import com.marklogic.client.document.DocumentManager;
 import com.marklogic.client.io.DocumentMetadataHandle;
 import com.marklogic.client.io.JacksonHandle;
 import com.marklogic.client.io.StringHandle;
+import com.marklogic.client.io.InputStreamHandle;
 import com.marklogic.client.io.marker.JSONWriteHandle;
 import com.marklogic.client.io.Format;
 
@@ -20,6 +21,7 @@ import oracle.goldengate.delivery.handler.marklogic.HandlerProperties;
 import java.util.*;
 import java.util.Hashtable;
 import java.util.function.BooleanSupplier;
+import java.io.IOException;
 
 /**
  * Created by prawal on 1/23/17.
@@ -53,7 +55,7 @@ public class WriteList {
     }
   }
 
-  public void commit(HandlerProperties handlerProperties) throws JsonProcessingException {
+  public void commit(HandlerProperties handlerProperties) throws JsonProcessingException, IOException {
 
     if(this.items.size() > 0) {
       DocumentManager docMgr = getDocumentManager(handlerProperties);
@@ -84,6 +86,7 @@ public class WriteList {
             StringHandle handle = new StringHandle(writer.writeValueAsString(node));
 
             coll.addAll(item.getCollection());
+            coll.addAll(handlerProperties.getCollections());
             docMgr.write(item.getUri(), metadataHandle, handle);
             coll.clear();
           } else {
@@ -118,6 +121,7 @@ public class WriteList {
               StringHandle handle = new StringHandle(writer.writeValueAsString(node));
 
               coll.addAll(item.getCollection());
+              coll.addAll(handlerProperties.getCollections());
               docMgr.write(item.getUri(), metadataHandle, handle);
               coll.clear();
             }
@@ -137,20 +141,15 @@ public class WriteList {
     return transform;
   }
 
-  private HashMap<String, Object> updateNode(WriteListItem item, DocumentManager docMgr, HandlerProperties handlerProperties) {
+  private HashMap<String, Object> updateNode(WriteListItem item, DocumentManager docMgr, HandlerProperties handlerProperties)
+    throws IOException {
 
-    // need to figure out what to do with XML
+    InputStreamHandle handle = new InputStreamHandle();
 
-    // also need to figure out what to do with data that is in an envelope: if a transform was called,
-    // how can we update that data?
-
-    // if the update is supposed to have all fields, why do we need to merge? can't we just replace?
-
-    JacksonHandle handle = new JacksonHandle();
     docMgr.read(item.getUri(), handle);
 
     ObjectMapper mapper = getObjectMapper(handlerProperties);
-    HashMap<String, Object> original = mapper.convertValue(handle.get(), HashMap.class);
+    HashMap<String, Object> original = mapper.readValue(handle.get(), HashMap.class);
     HashMap<String, Object> update = item.getMap();
 
     String key = null;

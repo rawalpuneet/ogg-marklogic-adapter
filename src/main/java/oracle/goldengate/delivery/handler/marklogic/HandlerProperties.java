@@ -8,21 +8,23 @@ import oracle.goldengate.delivery.handler.marklogic.models.WriteList;
 import com.marklogic.client.DatabaseClientFactory.Authentication;
 
 import java.util.HashMap;
+import java.util.Collection;
+import java.util.ArrayList;
 
 public class HandlerProperties {
 
     private DatabaseClient client;
-    private String database = "Documents";
-    private String host = "localhost";
-    private String port = "8000";
-    private String user = "admin";
-    private String password = "admin";
+    private String database;
+    private String host;
+    private String port;
+    private String user;
+    private String password;
     private String format = "json";
     private String auth = "digest";
-    private String rootName = null;
-    private String transformName = null;
-    private HashMap<String, String> transformParams = null;
-
+    private String rootName;
+    private String transformName;
+    private HashMap<String, String> transformParams;
+    private Collection<String> collections = new ArrayList<String>();
 
     public Long totalInserts = 0L;
     public Long totalUpdates = 0L;
@@ -123,4 +125,25 @@ public class HandlerProperties {
     public HashMap<String, String> getTransformParams() {
         return transformParams;
     }
+
+    /**
+     * Pass in a comma-delimited list to set multiple collections
+     */
+    public void setCollections(String collections) {
+        synchronized (this.collections) {
+            this.collections.clear();
+
+            if (collections != null) {
+                String[] collectionList = collections.split(",");
+                for (String collection : collectionList) {
+                  this.collections.add(collection);
+                }
+            }
+        }
+    }
+
+    public Collection<String> getCollections() {
+        return this.collections;
+    }
+
 }

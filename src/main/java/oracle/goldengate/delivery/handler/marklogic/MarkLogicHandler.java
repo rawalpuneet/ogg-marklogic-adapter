@@ -128,9 +128,8 @@ public class MarkLogicHandler extends AbstractHandler {
             handlerProperties.getHost(), Integer.parseInt(handlerProperties.getPort()),
             handlerProperties.getDatabase(),
             handlerProperties.getUser(), handlerProperties.getPassword(),
-           DatabaseClientFactory.Authentication.valueOf(handlerProperties.getAuth().toUpperCase()));
-
-
+            DatabaseClientFactory.Authentication.valueOf(handlerProperties.getAuth().toUpperCase())
+        );
 
         this.handlerProperties.setClient(client);
     }
@@ -161,13 +160,17 @@ public class MarkLogicHandler extends AbstractHandler {
     public void setRootName(String rootName) {
         handlerProperties.setRootName(rootName);
     }
-    
+
     public void setTransformName(String transformName) {
         handlerProperties.setTransformName(transformName);
     }
 
     public void setTransformParams(String transformParams) {
         handlerProperties.setTransformParams(transformParams);
+    }
+
+    public void setCollections(String collections) {
+        handlerProperties.setCollections(collections);
     }
 
     public HandlerProperties getProperties() {

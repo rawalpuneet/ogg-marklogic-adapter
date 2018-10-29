@@ -37,9 +37,8 @@ public class WriteListItem {
         this.map = map;
         this.operation = operation;
 
-        this.collection.add(   table.getSchemaName().toLowerCase()  + "/" + table.getShortName().toLowerCase());
+        this.collection.add(table.getSchemaName().toLowerCase()  + "/" + table.getShortName().toLowerCase());
         this.collection.add(table.getSchemaName().toLowerCase());
-
     }
 
     public String getUri() {
@@ -65,6 +64,4 @@ public class WriteListItem {
     public Collection<String> getCollection() {
         return this.collection;
     }
-
-
 }
