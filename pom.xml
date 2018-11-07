@@ -11,15 +11,24 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <goldengate.version>12.3.1.1.0.013</goldengate.version>
+        <goldengate.version>12.3.1.1.1.002</goldengate.version>
+        <jackson.version>2.9.7</jackson.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>jcenter</id>
+            <url>http://jcenter.bintray.com</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
-            <groupId>com.marklogic</groupId>
-            <artifactId>java-client-api</artifactId>
-            <version>3.0.6</version>
+          <groupId>com.marklogic</groupId>
+          <artifactId>marklogic-client-api</artifactId>
+          <version>4.1.0</version>
         </dependency>
+
         <dependency>
             <groupId>com.oracle.goldengate</groupId>
             <artifactId>ggdbutil</artifactId>
@@ -41,25 +50,19 @@
             <systemPath>${project.basedir}/lib/ggutil-${goldengate.version}.jar</systemPath>
             <scope>system</scope>
         </dependency>
+
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>6.7</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.google.collections</groupId>
-            <artifactId>google-collections</artifactId>
-            <version>1.0</version>
-            <scope>test</scope>
-        </dependency>
 
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.6</version>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.0.13</version>
         </dependency>
-
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -101,20 +104,13 @@
             <artifactId>spring-context-support</artifactId>
             <version>4.3.5.RELEASE</version>
         </dependency>
-<!--
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
--->
+
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
             <version>${jackson.version}</version>
             <optional>true</optional>
         </dependency>
-
 
     </dependencies>
 

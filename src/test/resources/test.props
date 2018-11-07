@@ -1,7 +1,7 @@
-#MarkLogic Host
 gg.handler.marklogic.host=localhost
 gg.handler.marklogic.port=8000
 gg.handler.marklogic.database=Documents
 gg.handler.marklogic.user=admin
 gg.handler.marklogic.password=admin
 gg.handler.marklogic.auth=digest
+

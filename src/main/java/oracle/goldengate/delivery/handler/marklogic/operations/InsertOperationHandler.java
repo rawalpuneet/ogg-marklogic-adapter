@@ -16,10 +16,11 @@ public class InsertOperationHandler extends OperationHandler {
     @Override
     public void process(TableMetaData tableMetaData, Op op) throws Exception {
         WriteListItem item = new WriteListItem(
-                            prepareKey(tableMetaData,op, false),
-                            getDataMap(tableMetaData, op, false),
-                            WriteListItem.INSERT,
-                            tableMetaData.getTableName());
+            prepareKey(tableMetaData,op, false),
+            getDataMap(tableMetaData, op, false),
+            WriteListItem.INSERT,
+            tableMetaData.getTableName()
+        );
 
         processOperation(item);
         handlerProperties.totalInserts++;
