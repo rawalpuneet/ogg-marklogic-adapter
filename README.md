@@ -16,7 +16,7 @@ S.no| Software | Version
 1.  |MarkLogic | 8.x
 2.  |MySQL     | 14.14
 3.  |Java      | 1.8
-4.  |GoldenGate| 12.2.0.1
+4.  |GoldenGate| 12.3.1
 5.  |Centos    | 7.2.1511
 
 ### Setup MySQL
