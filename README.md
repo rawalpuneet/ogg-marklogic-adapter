@@ -9,11 +9,11 @@ GoldenGate supports adapters that developer write custom target databases. MarkL
 MarkLogic is often used as a datahub for the information available in different environments, databases and formats. Adapter interface can be used to bring data from all the sources and also keep datahub upto date with all the latest changes.
 
 ## Configuration
-Adapter is currently cerfified for following versions:
+Adapter has been tested with the following versions:
 
 S.no| Software | Version
 ----|----------|--------
-1.  |MarkLogic | 8.x
+1.  |MarkLogic | 8.x, 9.x
 2.  |MySQL     | 14.14
 3.  |Java      | 1.8
 4.  |GoldenGate| 12.3.1
